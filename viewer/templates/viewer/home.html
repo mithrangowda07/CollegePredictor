@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCET Cutoff Viewer</title>
+    <style>
+        body {
+            background-color: #f9fbe7;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        #form-container {
+            display: block;
+            margin-top: 20px;
+        }
+        button {
+            margin-right: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>KCET College Cutoff Viewer</h1>
+
+    <button onclick="start()">start</button>
+    <button onclick="end()">End</button>
+
+    <!-- Form Section -->
+    <div id="form-container">
+        <form id="cutoff-form" method="POST">
+            {% csrf_token %}
+            <label for="category">Select Category:</label>
+            <select name="category" id="category" required>
+                <option value="">Select</option>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="college">Select College:</label>
+            <select name="college" id="college" required>
+                <option value="">Select</option>
+                {% for college in colleges %}
+                    <option value="{{ college }}">{{ college }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="branch">Select Branch:</label>
+            <select name="branch" id="branch" required>
+                <option value="">Select</option>
+                {% for branch in branches %}
+                    <option value="{{ branch }}">{{ branch }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Display the result -->
+        <div id="result">
+            {% if cutoff_rank %}
+                <h2>Cutoff Rank: {{ cutoff_rank }}</h2>
+            {% else %}
+                <h2>No Data found for the chosen Data!</h2>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Function to show the form
+        function start() {
+            const formContainer = document.getElementById("form-container");
+            formContainer.style.display = "block";
+        }
+
+        // Function to hide the form
+        function end() {
+            const formContainer = document.getElementById("form-container");
+            formContainer.style.display = "none";
+        }
+
+        // Submit event handler for the form
+        const form = document.getElementById("cutoff-form");
+        form.addEventListener("submit", function (e) {
+
+            const formContainer = document.getElementById("form-container");
+            formContainer.style.display = "block";
+        });
+    </script>
+</body>
+</html>
